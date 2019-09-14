@@ -16,7 +16,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -32,7 +31,7 @@ public class Dietary_Predictive_Equation_Calc extends Application {
      *
      */
     public static final int ELEMENTS_IN_VBOX = 10;
-    public static final int VBOX_SPACING = 10;
+    public static final int DEFAULT_SPACING = 10;
     public static final int WINDOW_WIDTH = 300;
     public static final int WINDOW_HEIGHT = 400;
     
@@ -48,18 +47,10 @@ public class Dietary_Predictive_Equation_Calc extends Application {
         launch(args);
     }
     
-    // Be sure to clean this up later.
-    public boolean getGender(ToggleGroup genderGroup, RadioButton male) throws IllegalArgumentException {
-        if (genderGroup.getSelectedToggle() != null)
-            return male.isSelected();
-        else
-            throw new IllegalArgumentException("Please select a gender");
-    }
-    
     public void addResult(VBox layout, String equationName, Double result) {
         Label equation_Name = new Label(equationName);
         Label equation_Result = new Label(result.toString());
-        HBox hbEquation = new HBox(10);
+        HBox hbEquation = new HBox(DEFAULT_SPACING);
         hbEquation.getChildren().addAll(equation_Name, equation_Result);
         
         layout.getChildren().add(hbEquation);
@@ -67,7 +58,7 @@ public class Dietary_Predictive_Equation_Calc extends Application {
     
     public void showInputs(Stage stage) {
     // Creates the vertical pane to hold the input controls.
-        VBox layout = new VBox(VBOX_SPACING);
+        VBox layout = new VBox(DEFAULT_SPACING);
         layout.setAlignment(TOP_CENTER);
         layout.setStyle("-fx-padding: 20 0 0 0;");
         
@@ -93,6 +84,7 @@ public class Dietary_Predictive_Equation_Calc extends Application {
         Label gender = new Label("Gender:");
         RadioButton male = new RadioButton("Male");
         male.setToggleGroup(genderGroup);
+        male.setSelected(true);
         RadioButton female = new RadioButton("Female");
         female.setToggleGroup(genderGroup);
         layout.getChildren().addAll(gender, male, female);
@@ -105,7 +97,7 @@ public class Dietary_Predictive_Equation_Calc extends Application {
                 Patient patient = new Patient(ageInputField.getText(),
                         weightInputField.getText(),
                         heightInputField.getText(),
-                        getGender(genderGroup, male));
+                        male.isSelected());
                 
                 showResults(stage, patient);
             }
