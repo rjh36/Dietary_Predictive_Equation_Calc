@@ -18,6 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -26,6 +27,14 @@ import javafx.stage.Stage;
  * @author Robert
  */
 public class Dietary_Predictive_Equation_Calc extends Application {
+    
+    /**
+     *
+     */
+    public static final int ELEMENTS_IN_VBOX = 10;
+    public static final int VBOX_SPACING = 10;
+    public static final int WINDOW_WIDTH = 300;
+    public static final int WINDOW_HEIGHT = 400;
     
     @Override
     public void start(Stage stage) {
@@ -47,80 +56,70 @@ public class Dietary_Predictive_Equation_Calc extends Application {
             throw new IllegalArgumentException("Please select a gender");
     }
     
-    public void addResult(GridPane layout, String equationName, Double result) {
+    public void addResult(VBox layout, String equationName, Double result) {
         Label equation_Name = new Label(equationName);
         Label equation_Result = new Label(result.toString());
         HBox hbEquation = new HBox(10);
         hbEquation.getChildren().addAll(equation_Name, equation_Result);
         
-        layout.addColumn(0, hbEquation);
+        layout.getChildren().add(hbEquation);
     }
     
     public void showInputs(Stage stage) {
-    // Creates the gridpane to hold the input controls.
-        GridPane layout = new GridPane();
-        layout.setVgap(10);
+    // Creates the vertical pane to hold the input controls.
+        VBox layout = new VBox(VBOX_SPACING);
         layout.setAlignment(TOP_CENTER);
         layout.setStyle("-fx-padding: 20 0 0 0;");
         
     // Age input section.
         Label age = new Label("Age:");
         TextField ageInputField = new TextField ();
-        HBox hbAge = new HBox(10);
-        hbAge.getChildren().addAll(age, ageInputField);
-        
-        layout.addColumn(0, hbAge);
+        layout.getChildren().addAll(age, ageInputField);
         
     // Weight input section.
     // Kilograms!!!
         Label weight = new Label("Weight:");
         TextField weightInputField = new TextField ();
-        HBox hbWeight = new HBox(10);
-        hbWeight.getChildren().addAll(weight, weightInputField);
-        
-        layout.addColumn(0, hbWeight);
+        layout.getChildren().addAll(weight, weightInputField);
         
     // Height input section.
     // Centimeters!!!
         Label height = new Label("Height:");
         TextField heightInputField = new TextField ();
-        HBox hbHeight = new HBox(10);
-        hbHeight.getChildren().addAll(height, heightInputField);
-        
-        layout.addColumn(0, hbHeight);
+        layout.getChildren().addAll(height, heightInputField);
         
     // Gender input section.
         final ToggleGroup genderGroup = new ToggleGroup();
         Label gender = new Label("Gender:");
-        RadioButton male = new RadioButton("M");
+        RadioButton male = new RadioButton("Male");
         male.setToggleGroup(genderGroup);
-        RadioButton female = new RadioButton("F");
+        RadioButton female = new RadioButton("Female");
         female.setToggleGroup(genderGroup);
-        HBox hbGender = new HBox(10);
-        hbGender.getChildren().addAll(gender, male, female);
-        
-        layout.addColumn(0, hbGender);
+        layout.getChildren().addAll(gender, male, female);
         
     // Calculation button, tells the application to mainScreenReturn the values.
         Button calculate = new Button();
         calculate.setText("Calculate responses.");
         calculate.setOnAction((ActionEvent event) -> {
             try {
-                Patient patient = new Patient(ageInputField.getText(), weightInputField.getText(), heightInputField.getText(), getGender(genderGroup, male));
+                Patient patient = new Patient(ageInputField.getText(),
+                        weightInputField.getText(),
+                        heightInputField.getText(),
+                        getGender(genderGroup, male));
                 
                 showResults(stage, patient);
             }
             catch(IllegalArgumentException e) {
-                if(layout.getChildren().size() > 5)
-                    layout.getChildren().remove(5);
+                if(layout.getChildren().size() > ELEMENTS_IN_VBOX)
+                    layout.getChildren().remove(ELEMENTS_IN_VBOX);
                 Label error = new Label(e.getMessage());
                 error.setTextFill(Color.RED);
-                layout.addColumn(0, error);
+                layout.getChildren().add(error);
             }
         });
-        layout.addColumn(0, calculate);
+        layout.getChildren().add(calculate);
         
-        Scene scene = new Scene(layout, 300, 250);
+        Scene scene = new Scene(layout, WINDOW_WIDTH, WINDOW_HEIGHT);
         
         stage.setTitle("Dietary Predictive Equation Calculator!");
         stage.setScene(scene);
@@ -129,8 +128,7 @@ public class Dietary_Predictive_Equation_Calc extends Application {
     
     public void showResults(Stage stage, Patient patient) {
     // Creates the gridpane to hold the input controls.
-        GridPane layout = new GridPane();
-        layout.setVgap(10);
+        VBox layout = new VBox(10);
         layout.setAlignment(TOP_CENTER);
         layout.setStyle("-fx-padding: 20 0 0 0;");
         
@@ -161,10 +159,10 @@ public class Dietary_Predictive_Equation_Calc extends Application {
         // Method call to show previous scene.
             showInputs(stage);
         });
-        layout.addColumn(0, mainScreenReturn);
+        layout.getChildren().add(mainScreenReturn);
         
     // Shows the scene.
-        Scene scene = new Scene(layout, 300, 300);
+        Scene scene = new Scene(layout, WINDOW_WIDTH, WINDOW_HEIGHT);
         stage.setTitle("Dietary Predictive Equation Results!");
         stage.setScene(scene);
         stage.show();
