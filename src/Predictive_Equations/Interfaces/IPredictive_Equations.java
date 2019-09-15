@@ -12,19 +12,24 @@ import dietary_predictive_equation_calc.Patient;
  * @author Robert
  */
 public interface IPredictive_Equations {
-// Mifflin-St Jeor equations.
-    double MifflinStJeorM(Patient patient);
-    double MifflinStJeorF(Patient patient);
-// Harris Benedict Equations
-    double HarrisBenedictM(Patient patient);
-    double HarrisBenedictF(Patient patient);
-// Owen Equations
-    double OwenM(Patient patient);
-    double OwenF(Patient patient);
-// WHO/FAO/UNU Equations
-    double WHO_FAO_UNUM(Patient patient);
-    double WHO_FAO_UNUF(Patient patient);
-// WHO/FAO/UNU Equations with height(m)
-    double WHO_FAO_UNUM_H(Patient patient);
-    double WHO_FAO_UNUF_H(Patient patient);
+// Harris Benedict
+    double HarrisBenedict(Patient patient);
+// Mifflin-St Jeor
+    double MifflinStJeor(Patient patient);
+// Ireton-Jones (1992)
+    double IretonJones1992(Patient patient);
+// Ireton-Jones (1997)
+    double IretonJones1997(Patient patient);
+// Penn State (1998)
+    double PennState1998(Patient patient);
+// Penn State (2003)
+    double PennState2003(Patient patient);
+// Penn State (2010)
+    double PennState2010(Patient patient);
+// Swinamer (1990)
+    double Swinamer1990(Patient patient);
+// Brandi (1999)
+    double Brandi1999(Patient patient);
+// Faisy (2003)
+    double Faisy2003(Patient patient);
 }

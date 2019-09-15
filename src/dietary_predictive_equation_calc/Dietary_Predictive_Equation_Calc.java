@@ -119,8 +119,8 @@ public class Dietary_Predictive_Equation_Calc extends Application {
     }
     
     public void showResults(Stage stage, Patient patient) {
-    // Creates the gridpane to hold the input controls.
-        VBox layout = new VBox(10);
+    // Creates the vertical pane to hold the input results.
+        VBox layout = new VBox(DEFAULT_SPACING);
         layout.setAlignment(TOP_CENTER);
         layout.setStyle("-fx-padding: 20 0 0 0;");
         
