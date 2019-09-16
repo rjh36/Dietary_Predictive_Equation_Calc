@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import static javafx.geometry.Pos.TOP_CENTER;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -63,43 +64,78 @@ public class Dietary_Predictive_Equation_Calc extends Application {
         layout.setStyle("-fx-padding: 20 0 0 0;");
         
     // Age input section.
-        Label age = new Label("Age:");
-        TextField ageInputField = new TextField ();
-        layout.getChildren().addAll(age, ageInputField);
+        TextField age = new TextField ();
+        layout.getChildren().addAll(new Label("Age:"), age);
         
     // Weight input section.
     // Kilograms!!!
-        Label weight = new Label("Weight:");
-        TextField weightInputField = new TextField ();
-        layout.getChildren().addAll(weight, weightInputField);
+        TextField weight = new TextField ();
+        layout.getChildren().addAll(new Label("Weight:"), weight);
         
     // Height input section.
     // Centimeters!!!
-        Label height = new Label("Height:");
-        TextField heightInputField = new TextField ();
-        layout.getChildren().addAll(height, heightInputField);
+        TextField height = new TextField ();
+        layout.getChildren().addAll(new Label("Height:"), height);
         
     // Gender input section.
         final ToggleGroup genderGroup = new ToggleGroup();
-        Label gender = new Label("Gender:");
         RadioButton male = new RadioButton("Male");
         male.setToggleGroup(genderGroup);
         male.setSelected(true);
         RadioButton female = new RadioButton("Female");
         female.setToggleGroup(genderGroup);
-        layout.getChildren().addAll(gender, male, female);
+        layout.getChildren().addAll(new Label("Gender:"), male, female);
+        
+    // Trauma input section
+        CheckBox trauma = new CheckBox("Trauma?");
+        layout.getChildren().add(trauma);
+        
+    // Burns input section
+        CheckBox burns = new CheckBox("Burns?");
+        layout.getChildren().add(burns);
+        
+    // Ventilator input section
+        CheckBox ventilator = new CheckBox("Ventilator?");
+        layout.getChildren().add(ventilator);
+        
+    // RespRate input section.
+        TextField respRate = new TextField ();
+        layout.getChildren().addAll(new Label("RespRate:"), respRate);
+        
+    // TidalVolume input section.
+        TextField tidalVolume = new TextField ();
+        layout.getChildren().addAll(new Label("TidalVolume:"), tidalVolume);
+        
+    // HeartRate input section.
+        TextField heartRate = new TextField ();
+        layout.getChildren().addAll(new Label("HeartRate:"), heartRate);
+        
+    // Tmax input section.
+        TextField Tmax = new TextField ();
+        layout.getChildren().addAll(new Label("Tmax:"), Tmax);
+        
+    // Ve input section.
+        TextField Ve = new TextField ();
+        layout.getChildren().addAll(new Label("Ve:"), Ve);
         
     // Calculation button, tells the application to mainScreenReturn the values.
         Button calculate = new Button();
         calculate.setText("Calculate responses.");
         calculate.setOnAction((ActionEvent event) -> {
             try {
-                Patient patient = new Patient(ageInputField.getText(),
-                        weightInputField.getText(),
-                        heightInputField.getText(),
-                        male.isSelected());
+                Patient patient = new Patient(age.getText(),
+                        weight.getText(),
+                        height.getText(),
+                        male.isSelected(),
+                        trauma.isSelected(),
+                        burns.isSelected(),
+                        respRate.getText(),
+                        tidalVolume.getText(),
+                        heartRate.getText(),
+                        Tmax.getText(),
+                        Ve.getText());
                 
-                showResults(stage, patient);
+                showResults(stage, patient, ventilator.isSelected());
             }
             catch(IllegalArgumentException e) {
                 if(layout.getChildren().size() > ELEMENTS_IN_VBOX)
@@ -118,7 +154,7 @@ public class Dietary_Predictive_Equation_Calc extends Application {
         stage.show();
     }
     
-    public void showResults(Stage stage, Patient patient) {
+    public void showResults(Stage stage, Patient patient, boolean ventilator) {
     // Creates the vertical pane to hold the input results.
         VBox layout = new VBox(DEFAULT_SPACING);
         layout.setAlignment(TOP_CENTER);
@@ -126,23 +162,20 @@ public class Dietary_Predictive_Equation_Calc extends Application {
         
     // Calculates and shows the results of the predictive equations.
         IPredictive_Equations pe = new Predictive_Equations();// CHANGE.
-
-        if(patient.isGender()) {
-            addResult(layout, "MifflinStJeorM:", pe.MifflinStJeorM(patient));
-            addResult(layout, "HarrisBenedictM:", pe.HarrisBenedictM(patient));
-            addResult(layout, "OwenM:", pe.OwenM(patient));
-            addResult(layout, "WHO_FAO_UNUM:", pe.WHO_FAO_UNUM(patient));
-            addResult(layout, "WHO_FAO_UNUM_H:", pe.WHO_FAO_UNUM_H(patient));
-        }
-        else {
-            addResult(layout, "MifflinStJeorF:", pe.MifflinStJeorF(patient));
-            addResult(layout, "HarrisBenedictF:", pe.HarrisBenedictF(patient));
-            addResult(layout, "OwenF:", pe.OwenF(patient));
-            addResult(layout, "WHO_FAO_UNUF:", pe.WHO_FAO_UNUF(patient));
-            addResult(layout, "WHO_FAO_UNUF_H:", pe.WHO_FAO_UNUF_H(patient));
-        }
         
         
+        addResult(layout, "HarrisBenedict:", pe.HarrisBenedict(patient));
+        addResult(layout, "MifflinStJeor:", pe.MifflinStJeor(patient));
+        addResult(layout, "IretonJones1992:", pe.IretonJones1992(patient));
+        addResult(layout, "IretonJones1997:", pe.IretonJones1997(patient));
+        if(ventilator) {
+            addResult(layout, "PennState1998:", pe.PennState1998(patient));
+            addResult(layout, "PennState2003:", pe.PennState2003(patient));
+            addResult(layout, "PennState2010:", pe.PennState2010(patient));
+            addResult(layout, "Swinamer1990:", pe.Swinamer1990(patient));
+            addResult(layout, "Brandi1999:", pe.Brandi1999(patient));
+            addResult(layout, "Faisy2003:", pe.Faisy2003(patient));
+        }
         
     // Calculation button, tells the application to mainScreenReturn the values.
         Button mainScreenReturn = new Button();
