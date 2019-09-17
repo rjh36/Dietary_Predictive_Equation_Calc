@@ -31,10 +31,11 @@ public class Dietary_Predictive_Equation_Calc extends Application {
     /**
      *
      */
-    public static final int ELEMENTS_IN_VBOX = 22;
+    public static final int ELEMENTS_IN_VBOX = 23;
+    public static final String STYLE = "-fx-padding: 20 20 0 20;";
     public static final int DEFAULT_SPACING = 10;
     public static final int WINDOW_WIDTH = 300;
-    public static final int WINDOW_HEIGHT = 700;
+    public static final int WINDOW_HEIGHT = 650;
     
     @Override
     public void start(Stage stage) {
@@ -56,9 +57,9 @@ public class Dietary_Predictive_Equation_Calc extends Application {
     
     public void showInputs(Stage stage) {
     // Creates the vertical pane to hold the input controls.
-        VBox layout = new VBox(DEFAULT_SPACING);
+        VBox layout = new VBox(5);
         layout.setAlignment(TOP_CENTER);
-        layout.setStyle("-fx-padding: 20 0 0 0;");
+        layout.setStyle(STYLE);
         
     // Age input section.
         TextField age = new TextField ();
@@ -120,7 +121,10 @@ public class Dietary_Predictive_Equation_Calc extends Application {
         calculate.setText("Calculate responses.");
         calculate.setOnAction((ActionEvent event) -> {
             try {
-                Patient patient = new Patient(age.getText(),
+                boolean v = ventilator.isSelected();
+                Patient patient;
+                if(v)
+                     patient = new Patient(age.getText(),
                         weight.getText(),
                         height.getText(),
                         male.isSelected(),
@@ -131,8 +135,15 @@ public class Dietary_Predictive_Equation_Calc extends Application {
                         heartRate.getText(),
                         Tmax.getText(),
                         Ve.getText());
+                else
+                    patient = new Patient(age.getText(),
+                        weight.getText(),
+                        height.getText(),
+                        male.isSelected(),
+                        trauma.isSelected(),
+                        burns.isSelected());
                 
-                showResults(patient, ventilator.isSelected());
+                showResults(patient, v);
             }
             catch(IllegalArgumentException e) {
                 if(layout.getChildren().size() > ELEMENTS_IN_VBOX)
@@ -156,7 +167,7 @@ public class Dietary_Predictive_Equation_Calc extends Application {
     // Creates the vertical pane to hold the input results.
         VBox layout = new VBox(DEFAULT_SPACING);
         layout.setAlignment(TOP_CENTER);
-        layout.setStyle("-fx-padding: 20 0 0 0;");
+        layout.setStyle(STYLE);
         
     // Calculates and shows the results of the predictive equations.
         IPredictive_Equations pe = new Predictive_Equations();// CHANGE.
