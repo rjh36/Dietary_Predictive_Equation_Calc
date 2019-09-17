@@ -31,10 +31,10 @@ public class Dietary_Predictive_Equation_Calc extends Application {
     /**
      *
      */
-    public static final int ELEMENTS_IN_VBOX = 10;
+    public static final int ELEMENTS_IN_VBOX = 22;
     public static final int DEFAULT_SPACING = 10;
     public static final int WINDOW_WIDTH = 300;
-    public static final int WINDOW_HEIGHT = 400;
+    public static final int WINDOW_HEIGHT = 700;
     
     @Override
     public void start(Stage stage) {
@@ -49,11 +49,8 @@ public class Dietary_Predictive_Equation_Calc extends Application {
     }
     
     public void addResult(VBox layout, String equationName, Double result) {
-        Label equation_Name = new Label(equationName);
-        Label equation_Result = new Label(result.toString());
         HBox hbEquation = new HBox(DEFAULT_SPACING);
-        hbEquation.getChildren().addAll(equation_Name, equation_Result);
-        
+        hbEquation.getChildren().addAll(new Label(equationName), new Label(result.toString()));
         layout.getChildren().add(hbEquation);
     }
     
@@ -135,7 +132,7 @@ public class Dietary_Predictive_Equation_Calc extends Application {
                         Tmax.getText(),
                         Ve.getText());
                 
-                showResults(stage, patient, ventilator.isSelected());
+                showResults(patient, ventilator.isSelected());
             }
             catch(IllegalArgumentException e) {
                 if(layout.getChildren().size() > ELEMENTS_IN_VBOX)
@@ -154,7 +151,8 @@ public class Dietary_Predictive_Equation_Calc extends Application {
         stage.show();
     }
     
-    public void showResults(Stage stage, Patient patient, boolean ventilator) {
+    public void showResults(Patient patient, boolean ventilator) {
+        Stage stage = new Stage();
     // Creates the vertical pane to hold the input results.
         VBox layout = new VBox(DEFAULT_SPACING);
         layout.setAlignment(TOP_CENTER);
@@ -176,15 +174,6 @@ public class Dietary_Predictive_Equation_Calc extends Application {
             addResult(layout, "Brandi1999:", pe.Brandi1999(patient));
             addResult(layout, "Faisy2003:", pe.Faisy2003(patient));
         }
-        
-    // Calculation button, tells the application to mainScreenReturn the values.
-        Button mainScreenReturn = new Button();
-        mainScreenReturn.setText("Input responses.");
-        mainScreenReturn.setOnAction((ActionEvent event) -> {
-        // Method call to show previous scene.
-            showInputs(stage);
-        });
-        layout.getChildren().add(mainScreenReturn);
         
     // Shows the scene.
         Scene scene = new Scene(layout, WINDOW_WIDTH, WINDOW_HEIGHT);
