@@ -6,7 +6,6 @@
 package dietary_predictive_equation_calc;
 
 import Predicitve_Equations.Predictive_Equations;
-import Predictive_Equations.Interfaces.IPredictive_Equations;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import static javafx.geometry.Pos.TOP_CENTER;
@@ -170,7 +169,7 @@ public class Dietary_Predictive_Equation_Calc extends Application {
         layout.setStyle(STYLE);
         
     // Calculates and shows the results of the predictive equations.
-        IPredictive_Equations pe = new Predictive_Equations();// CHANGE.
+        Predictive_Equations pe = new Predictive_Equations();
         
         
         addResult(layout, "HarrisBenedict:", pe.HarrisBenedict(patient));

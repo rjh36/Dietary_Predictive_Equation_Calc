@@ -5,7 +5,6 @@
  */
 package Predicitve_Equations;
 
-import Predictive_Equations.Interfaces.IPredictive_Equations;
 import dietary_predictive_equation_calc.Patient;
 
 /**
@@ -14,9 +13,8 @@ import dietary_predictive_equation_calc.Patient;
  * 
  * @author Robert
  */
-public class Predictive_Equations implements IPredictive_Equations {
+public class Predictive_Equations {
 // Harris Benedict
-    @Override
     public double HarrisBenedict(Patient patient) {
         if(patient.getGender() == 1)
             return 13.75*patient.getWeight()
@@ -31,7 +29,6 @@ public class Predictive_Equations implements IPredictive_Equations {
     }
     
 // Mifflin-St. Jeor (1990)
-    @Override
     public double MifflinStJeor(Patient patient) {
         if(patient.getGender() == 1)
             return 10*patient.getWeight()
@@ -46,7 +43,6 @@ public class Predictive_Equations implements IPredictive_Equations {
     }
     
 // Ireton-Jones (1992)
-    @Override
     public double IretonJones1992(Patient patient) {
         return 1925 
                 - 10*patient.getAge()
@@ -57,7 +53,6 @@ public class Predictive_Equations implements IPredictive_Equations {
     }
     
 // Ireton-Jones (1997)
-    @Override
     public double IretonJones1997(Patient patient) {
         return 1784 
                 + 5*patient.getWeight()
@@ -68,7 +63,6 @@ public class Predictive_Equations implements IPredictive_Equations {
     }
     
 // Penn State (1998)
-    @Override
     public double PennState1998(Patient patient) {
         return 1.1*HarrisBenedict(patient)
                 + 140*patient.getTmax()
@@ -77,7 +71,6 @@ public class Predictive_Equations implements IPredictive_Equations {
     }
     
 // Penn State (2003)
-    @Override
     public double PennState2003(Patient patient) {
         return 0.96*MifflinStJeor(patient)
                 + 167*patient.getTmax()
@@ -85,7 +78,6 @@ public class Predictive_Equations implements IPredictive_Equations {
                 - 6212;
     }
 // Penn State (2010)
-    @Override
     public double PennState2010(Patient patient) {
         return 0.71*MifflinStJeor(patient)
                 + 85*patient.getTmax()
@@ -93,7 +85,6 @@ public class Predictive_Equations implements IPredictive_Equations {
                 - 3085;
     }
 // Swinamer (1990)
-    @Override
     public double Swinamer1990(Patient patient) {
         return 945*BSA(patient) 
                 - 64*patient.getAge()
@@ -103,7 +94,6 @@ public class Predictive_Equations implements IPredictive_Equations {
                 - 4349;
     }
 // Brandi (1999)
-    @Override
     public double Brandi1999(Patient patient) {
         return 0.96*HarrisBenedict(patient)
                 + 7*patient.getHeartRate()
@@ -111,7 +101,6 @@ public class Predictive_Equations implements IPredictive_Equations {
                 - 702;
     }
 // Faisy (2003)
-    @Override
     public double Faisy2003(Patient patient) {
         return 8*patient.getWeight()
                 + 14*patient.getHeight()
