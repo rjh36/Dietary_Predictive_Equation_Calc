@@ -9,7 +9,7 @@ import dietary_predictive_equation_calc.Patient;
 
 /**
  * This class holds methods for calculating the results of dietary predictive equations.
- * Add trimming for the double values
+ * TEST THAT THE RESULTS ARE CORRECT!
  * 
  * @author Robert
  */

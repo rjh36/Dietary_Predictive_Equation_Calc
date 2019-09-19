@@ -50,7 +50,7 @@ public class Dietary_Predictive_Equation_Calc extends Application {
     
     public void addResult(VBox layout, String equationName, Double result) {
         HBox hbEquation = new HBox(DEFAULT_SPACING);
-        hbEquation.getChildren().addAll(new Label(equationName), new Label(result.toString()));
+        hbEquation.getChildren().addAll(new Label(equationName), new Label(String.format("%.2f",result)));// Maybe change formatting
         layout.getChildren().add(hbEquation);
     }
     
