@@ -10,6 +10,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import static javafx.geometry.Pos.TOP_CENTER;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -18,7 +19,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -30,11 +30,10 @@ public class Dietary_Predictive_Equation_Calc extends Application {
     /**
      *
      */
-    public static final int ELEMENTS_IN_VBOX = 23;
     public static final String STYLE = "-fx-padding: 20 20 0 20;";
     public static final int DEFAULT_SPACING = 10;
     public static final int WINDOW_WIDTH = 300;
-    public static final int WINDOW_HEIGHT = 650;
+    public static final int WINDOW_HEIGHT = 600;
     
     @Override
     public void start(Stage stage) {
@@ -145,11 +144,7 @@ public class Dietary_Predictive_Equation_Calc extends Application {
                 showResults(patient, v);
             }
             catch(IllegalArgumentException e) {
-                if(layout.getChildren().size() > ELEMENTS_IN_VBOX)
-                    layout.getChildren().remove(ELEMENTS_IN_VBOX);
-                Label error = new Label(e.getMessage());
-                error.setTextFill(Color.RED);
-                layout.getChildren().add(error);
+                new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
             }
         });
         layout.getChildren().add(calculate);
